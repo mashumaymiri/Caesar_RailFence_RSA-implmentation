@@ -226,7 +226,7 @@ def RSAKeyGeneration():
     print("d = "+str(d))
     print("Public key: ("+str(e)+", "+str(n)+")")
     print("Private key: ("+str(d)+", "+str(n)+")")
-    return n, e, d
+    return int(n), int(e), int(d)
 
 def RSAKeySelection():
     n, e, d = 0, 0, 0
@@ -258,24 +258,26 @@ def RSAKeySelection():
             break
         else: 
             print("Error!. Public key and private key dont match!")
-    return n, e, d
+    return int(n), int(e), int(d)
 
 def RSAEncryption(m, e, n):
+    print("Using public key: ("+str(n)+", "+str(e)+")")
     print("Encrypting message: "+str(m)+" ......")
-    c = pow(m, e) % n
+    c = pow(m, e, n)# % n
     print("Encrypted message is: "+str(c))
     return c
 
 def RSADecryption(c, d, n):
+    print("Using private key: ("+str(n)+", "+str(d)+")")
     print("Decrypting cipher: "+str(c)+" ......")
-    m = pow(c, d) % n
+    m = pow(c, d, n)# % n
     print("Decrypted message is: "+str(m))
     return m
 
 def main():
     while True:
         print("\033[92mWelcome to CSC429 course project.")
-        print("Please Create the Plaint-text.txt file inside the Caesar Algorithm and the Rail fence cipher folders, to start using the algorithms")
+        print("Please Create the Plain-text.txt file inside the Caesar Algorithm and the Rail fence cipher folders, to start using the algorithms")
         print("Use numbers to select the algorithm:")
         print("1- Ceasar algorithm")
         print("2- Rail fence cipher")
