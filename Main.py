@@ -30,16 +30,18 @@ def CaesarAlgorithmEncryption(message, key):
     NTL = {0 : "A", 1 : "B", 2 : "C", 3 : "D", 4 : "E", 5 : "F", 6 : "G", 7 : "H", 8 : "I", 9 : "J", 10 : "K",11 : "L",12 : "M",13 : "N",14 : "O",15 : "P",16 : "Q",17 : "R",18 : "S",19 : "T",20 : "U",21 : "V",22 : "W",23 : "X",24 : "Y",25 : "Z",}
         
     messageList = np.array(list(message))
+    print(messageList)
 
     # Create key list.
     keyList = CreateKeyList(messageList, key)
-
+    print(keyList)
     # Encrypt the message
     cryptedList = np.zeros(shape=len(messageList), dtype= str) 
     n = 0
     for char in messageList:
         cryptedList[n] = NTL[(LTN[char.upper()] + LTN[keyList[n].upper()]) % 26]
         n = n + 1
+    print(cryptedList)
 
     # save to txt file
     SaveToFile(cryptedList, "Caesar Algorithm", "Cipher-text")
@@ -49,9 +51,11 @@ def CaesarAlgorithmDecryption(Cipher, key):
     NTL = {0 : "A", 1 : "B", 2 : "C", 3 : "D", 4 : "E", 5 : "F", 6 : "G", 7 : "H", 8 : "I", 9 : "J", 10 : "K",11 : "L",12 : "M",13 : "N",14 : "O",15 : "P",16 : "Q",17 : "R",18 : "S",19 : "T",20 : "U",21 : "V",22 : "W",23 : "X",24 : "Y",25 : "Z",}
         
     CipherList = np.array(list(Cipher))
+    print(CipherList)
 
     # Create key list.
     keyList = CreateKeyList(Cipher, key)
+    print(keyList)
 
     # Decrypt the message
     messageList = np.zeros(shape=len(CipherList), dtype= str) 
@@ -59,6 +63,7 @@ def CaesarAlgorithmDecryption(Cipher, key):
     for char in CipherList:
         messageList[n] = NTL[(LTN[char.upper()] - LTN[keyList[n].upper()]) % 26]
         n = n + 1
+    print(messageList)
 
     # Print a success message if the original text is the same as the decrypted text
     file = open(os.getcwd()+"\Caesar Algorithm\Plain-text.txt", "r")
@@ -88,9 +93,11 @@ def RailFenceCipherEncryption(message):
         n = n + 1
     oddList = np.array(oddList)
     evenList = np.array(evenList)
-    print(evenList)
-    print(oddList)
+    print("Original message: "+str(message))
+    print("First row  : "+", ".join(str(x) for x in evenList))
+    print("Second row : "+", ".join(str(x) for x in oddList))
     cipherList = np.concatenate((evenList, oddList))
+    print("Encrypted message : "+", ".join(str(x) for x in cipherList))
 
     # save to txt file
     SaveToFile(cipherList, "Rail fence cipher", "Cipher-text")
@@ -99,14 +106,18 @@ def RailFenceCipherDecryption(cipher):
     n = len(cipher)
     evenList = np.array(list(cipher[0:math.ceil(n/2)]))
     oddList = np.array(list(cipher[math.ceil(n/2):n]))
-    print(evenList)
-    print(oddList)
+    print("First row  : "+", ".join(str(x) for x in evenList))
+    print("Second row : "+", ".join(str(x) for x in oddList))
+
     messageList = []
     for k in range(math.ceil(n/2)):
         if k < len(evenList):
             messageList.append(evenList[k])
         if k < len(oddList):
             messageList.append(oddList[k])
+
+    
+    print("Decrypted message : "+", ".join(str(x) for x in messageList))
 
     # Print a success message if the original text is the same as the decrypted text
     file = open(os.getcwd()+"\Rail fence cipher\Plain-text.txt", "r")
@@ -264,6 +275,7 @@ def RSADecryption(c, d, n):
 def main():
     while True:
         print("\033[92mWelcome to CSC429 course project.")
+        print("Please Create the Plaint-text.txt file inside the Caesar Algorithm and the Rail fence cipher folders, to start using the algorithms")
         print("Use numbers to select the algorithm:")
         print("1- Ceasar algorithm")
         print("2- Rail fence cipher")
